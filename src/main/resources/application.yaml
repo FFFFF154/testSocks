@@ -1,0 +1,15 @@
+spring:
+  application:
+  name: testSocks
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: qwe
+    url: jdbc:postgresql://localhost:5432/postgres
