@@ -37,9 +37,15 @@ public class SocksService {
         Socks socksDB = socksRepository.findById(id).orElse(null);
 
         if (socksDB != null) { // TODO возможно есть лучше реализация
-            socksDB.setColor(dto.getColor());
-            socksDB.setQuantity(dto.getQuantity());
-            socksDB.setCottonPercent(dto.getCottonPercent());
+            if (dto.getColor() != null) {
+                socksDB.setColor(dto.getColor());
+            }
+            if (dto.getQuantity() != null) {
+                socksDB.setQuantity(dto.getQuantity());
+            }
+            if (dto.getCottonPercent() != null) {
+                socksDB.setCottonPercent(dto.getCottonPercent());
+            }
             socksRepository.save(socksDB);
             return true;
         }

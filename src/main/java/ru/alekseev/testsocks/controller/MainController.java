@@ -55,7 +55,7 @@ public class MainController {
         if (socksService.removeSocks(dto)) {
             log.info("dto outcome!");
         } else {
-            throw new NegativeValueException("Нехватка носков на складе");//TODO сделать обработчик exception
+            throw new NegativeValueException("Нехватка носков на складе");
         }
     }
 
@@ -64,7 +64,7 @@ public class MainController {
         if (socksService.updateSocks(id, dto)) {
             log.info("dto update!");
         } else {
-            throw new InvalidFormatException("Некорректный формат данных");// TODO обработка исключения
+            throw new InvalidFormatException("Некорректный формат данных");
         }
     }
 
