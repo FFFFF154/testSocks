@@ -36,7 +36,7 @@ public class SocksService {
     public boolean updateSocks(Long id, SocksDto dto){
         Socks socksDB = socksRepository.findById(id).orElse(null);
 
-        if (socksDB != null) { // TODO возможно есть лучше реализация
+        if (socksDB != null) {
             if (dto.getColor() != null) {
                 socksDB.setColor(dto.getColor());
             }
@@ -97,7 +97,7 @@ public class SocksService {
                                    String operator,
                                    String sort,
                                    Double minPercent,
-                                   Double maxPercent){
+                                   Double maxPercent){ // TODO попробовать specification
         if (color == null && cottonPercent == null && sort == null && minPercent == null && maxPercent == null) {
             return socksRepository.findAll();
         } else if (sort != null){
@@ -160,7 +160,7 @@ public class SocksService {
                     socksDto.setCottonPercent(cellCottonPercent.getNumericCellValue());
                     socksDto.setQuantity((int)cellQuantity.getNumericCellValue());
                     addSocks(socksDto);
-
+                    return true;
                 }
 
             }
