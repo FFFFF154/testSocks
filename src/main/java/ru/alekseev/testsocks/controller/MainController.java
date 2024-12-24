@@ -34,7 +34,7 @@ public class MainController {
 
     private final SocksService socksService;
 
-    @Autowired
+
     public MainController(SocksService socksService) {
         this.socksService = socksService;
     }
@@ -51,14 +51,17 @@ public class MainController {
             }
     )
     @GetMapping("/")
-    public List<Socks> allSocks(@RequestParam(name = "color", required = false) String color,
+    public ResponseEntity<List<Socks>> allSocks(@RequestParam(name = "color", required = false) String color,
                                 @RequestParam(name = "cottonPercent", required = false) Double cottonPercent,
                                 @RequestParam(name = "operator", required = false) String operator,
                                 @RequestParam(name = "sort", required = false) String sort,
                                 @RequestParam(name = "minCottonPercent", required = false) Double minPercent,
                                 @RequestParam(name = "maxCottonPercent", required = false) Double maxPercent) {
         log.info("socks is present");
-        return socksService.socksFilter(color, cottonPercent, operator, sort, minPercent, maxPercent);
+        return ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(this.socksService.socksFilter(color, cottonPercent, operator, sort, minPercent, maxPercent));
+                /*socksService.socksFilter(color, cottonPercent, operator, sort, minPercent, maxPercent);*/
     }
 
     @Operation(
@@ -73,7 +76,7 @@ public class MainController {
             }
     )
     @PostMapping("/income")
-    public ResponseEntity<String> income(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+    public ResponseEntity<?> income(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Носки добавлены", required = true,
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Socks.class),
@@ -100,7 +103,7 @@ public class MainController {
             }
     )
     @PostMapping("/outcome")
-    public ResponseEntity<String> outcome(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+    public ResponseEntity<?> outcome(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Носки уменьшены", required = true,
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Socks.class),
@@ -126,7 +129,7 @@ public class MainController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateSocks(@PathVariable Long id,
+    public ResponseEntity<?> updateSocks(@PathVariable Long id,
                                               @io.swagger.v3.oas.annotations.parameters.RequestBody(
                                                       description = "Носки добавлены", required = true,
                                                       content = @Content(mediaType = "application/json",
@@ -155,7 +158,7 @@ public class MainController {
     )
     @PostMapping(path = "/batch",
     consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> batchSocks(@RequestBody MultipartFile file) throws FileProcessingException {
+    public ResponseEntity<?> batchSocks(@RequestBody MultipartFile file) throws FileProcessingException {
         log.info("file income");
         if (socksService.addFromFile(file)){
             log.info("dto is update from file!");
